@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.antsfamily.sellersblogreader.ui.home.HomeScreen
 
 @Composable
 fun Navigation() {
@@ -25,7 +26,7 @@ fun Navigation() {
                 startDestination = Screen.Home.route
             ) {
                 composable(Screen.Home.route) {
-                    // TODO implement home screen
+                    HomeScreen.Content(navController = navController)
                 }
                 composable(
                     Screen.Post.route,

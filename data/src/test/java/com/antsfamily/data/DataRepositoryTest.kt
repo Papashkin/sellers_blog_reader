@@ -1,9 +1,7 @@
 package com.antsfamily.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.antsfamily.data.models.PostApiModel
-import com.antsfamily.data.models.PostContentApiModel
-import com.antsfamily.data.models.PostTitleApiModel
+import com.antsfamily.data.models.*
 import com.antsfamily.data.remote.RemoteSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -41,7 +39,13 @@ class DataRepositoryTest {
     }
 
     companion object {
-        private fun getMockPost(id: Int) = PostApiModel(id = id, date = "mock_date", title = PostTitleApiModel("mock_title"), content = PostContentApiModel("mock_content"))
+        private fun getMockPost(id: Int) = PostApiModel(
+            id = id,
+            date = "mock_date",
+            title = PostRenderedDataApiModel("mock_title"),
+            content = PostRenderedDataApiModel("mock_content"),
+            excerpt = PostRenderedDataApiModel("mock_excerpt"),
+        )
 
         private val MOCK_POSTS = listOf(
             getMockPost(1),
