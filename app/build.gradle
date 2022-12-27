@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.kapt'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
 }
 
@@ -50,6 +50,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
+
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.activity:activity-compose:1.6.1'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
