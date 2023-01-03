@@ -13,6 +13,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyInt
 import org.mockito.junit.MockitoJUnitRunner
+import java.util.Date
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -41,12 +42,14 @@ class DataRepositoryTest {
     companion object {
         private fun getMockPost(id: Int) = PostApiModel(
             id = id,
-            date = "mock_date",
+            date = MOCK_DATE,
             title = PostRenderedDataApiModel("mock_title"),
             content = PostRenderedDataApiModel("mock_content"),
             excerpt = PostRenderedDataApiModel("mock_excerpt"),
+            headJson = YoastHeadJsonApiModel("mock image"),
         )
 
+        private val MOCK_DATE = Date()
         private val MOCK_POSTS = listOf(
             getMockPost(1),
             getMockPost(2),
