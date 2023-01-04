@@ -4,4 +4,5 @@ import com.antsfamily.data.models.PostApiModel
 
 interface RemoteSource {
     suspend fun getPosts(page: Int): List<PostApiModel>
+    suspend fun getPostContent(id: Int): PostApiModel
 }

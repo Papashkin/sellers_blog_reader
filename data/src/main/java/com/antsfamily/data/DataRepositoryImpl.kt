@@ -9,4 +9,6 @@ class DataRepositoryImpl @Inject constructor(
 ): DataRepository {
 
     override suspend fun getPosts(page: Int): List<PostApiModel> = remoteSource.getPosts(page)
+
+    override suspend fun getPostContent(id: Int): PostApiModel = remoteSource.getPostContent(id)
 }

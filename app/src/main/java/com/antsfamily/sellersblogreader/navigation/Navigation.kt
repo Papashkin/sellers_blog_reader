@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.antsfamily.sellersblogreader.ui.home.HomeScreen
+import com.antsfamily.sellersblogreader.ui.post.PostScreen
 
 @Composable
 fun Navigation() {
@@ -26,13 +27,16 @@ fun Navigation() {
                 startDestination = Screen.Home.route
             ) {
                 composable(Screen.Home.route) {
-                    HomeScreen.Content(navController = navController)
+                    HomeScreen(navController = navController)
                 }
                 composable(
                     Screen.Post.route,
                     arguments = listOf(navArgument("id") { type = NavType.IntType })
-                ) {
-                    // TODO implement post screen
+                ) { entry ->
+                    PostScreen(
+                        navController = navController,
+                        id = entry.arguments?.getInt("id") ?: 0
+                    )
                 }
             }
         }

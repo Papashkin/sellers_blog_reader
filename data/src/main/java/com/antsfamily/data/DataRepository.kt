@@ -4,4 +4,5 @@ import com.antsfamily.data.models.PostApiModel
 
 interface DataRepository {
     suspend fun getPosts(page: Int): List<PostApiModel>
+    suspend fun getPostContent(id: Int): PostApiModel
 }
