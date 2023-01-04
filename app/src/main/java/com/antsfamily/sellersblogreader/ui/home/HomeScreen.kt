@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.antsfamily.data.models.PostApiModel
 import com.antsfamily.sellersblogreader.R
 import com.antsfamily.sellersblogreader.ui.theme.FontSize
 import com.antsfamily.sellersblogreader.ui.theme.Padding
@@ -33,13 +32,12 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState()
-    when {
-        state.value.isLoading -> FullScreenLoading()
-        state.value.isContentVisible ->
-            HomeScreenPostsContent(state.value.content, viewModel::onItemClicked) {
-                viewModel.onLoadMore()
-            }
-        state.value.isErrorVisible -> {}
+    when (val stateValue = state.value) {
+        HomeUiState.Loading -> FullScreenLoading()
+        is HomeUiState.Content -> HomeScreenPostsContent(stateValue.content, viewModel::onLoadMore) {
+//                navController.navigate("${Screen.Post.route.substringBefore("/")}/$it")
+        }
+        is HomeUiState.Error -> TODO()
     }
 }
 
@@ -60,9 +58,9 @@ fun FullScreenLoading() {
 
 @Composable
 fun HomeScreenPostsContent(
-    posts: List<PostApiModel>,
-    onItemClick: (Int) -> Unit,
+    posts: List<HomeItem>,
     onLoadMore: () -> Unit,
+    onItemClick: (Int) -> Unit,
 ) {
     val scrollState = rememberLazyListState()
     Column {
