@@ -8,4 +8,6 @@ class RemoteSourceImpl @Inject constructor(
 ) : RemoteSource {
 
     override suspend fun getPosts(page: Int): List<PostApiModel> = service.getPosts(page)
+
+    override suspend fun getPostContent(id: Int): PostApiModel = service.getPost(id)
 }

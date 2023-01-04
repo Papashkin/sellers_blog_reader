@@ -2,29 +2,22 @@ package com.antsfamily.sellersblogreader.ui.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.antsfamily.sellersblogreader.R
+import com.antsfamily.sellersblogreader.navigation.Screen
+import com.antsfamily.sellersblogreader.ui.common.FullScreenLoading
 import com.antsfamily.sellersblogreader.ui.theme.FontSize
 import com.antsfamily.sellersblogreader.ui.theme.Padding
-
-interface HomeScreen {
-    companion object {
-        @Composable
-        fun Content(navController: NavController) {
-            HomeScreen(navController)
-        }
-    }
-}
 
 @Composable
 fun HomeScreen(
@@ -34,27 +27,17 @@ fun HomeScreen(
     val state = viewModel.state.collectAsState()
     when (val stateValue = state.value) {
         HomeUiState.Loading -> FullScreenLoading()
-        is HomeUiState.Content -> HomeScreenPostsContent(stateValue.content, viewModel::onLoadMore) {
-//                navController.navigate("${Screen.Post.route.substringBefore("/")}/$it")
-        }
-        is HomeUiState.Error -> TODO()
-    }
-}
-
-@Preview
-@Composable
-fun FullScreenLoading() {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxSize()) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+        is HomeUiState.Content -> HomeScreenPostsContent(
+            stateValue.content,
+            viewModel::onLoadMore
         ) {
-            CircularProgressIndicator()
+            navController.navigate("${Screen.Post.route.substringBefore("/")}/$it")
+        }
+        is HomeUiState.Error -> {
+            //TODO add error handler
         }
     }
 }
-
 
 @Composable
 fun HomeScreenPostsContent(
@@ -94,13 +77,12 @@ fun HomeScreenPostsContent(
     }
 }
 
-
 @Composable
 fun LazyListState.OnBottomReached(
     buffer: Int = 0,
     loadMore: () -> Unit
 ) {
-    require(buffer >= 0) { "Buffer should not be less than 0, but was set as $buffer"}
+    require(buffer >= 0) { "Buffer should not be less than 0, but was set as $buffer" }
     val shouldLoadMore = remember {
         derivedStateOf {
             val lastVisibleItem =

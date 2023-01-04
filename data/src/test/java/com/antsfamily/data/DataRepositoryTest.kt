@@ -38,6 +38,12 @@ class DataRepositoryTest {
         val posts = repository.getPosts(1)
         assert(posts.size == 2)
     }
+    @Test
+    fun `get successfully post content`() = runTest {
+        `when`(remoteDataSource.getPostContent(anyInt())).thenReturn(getMockPost(1))
+        val content = repository.getPostContent(1)
+        assert(content.id == 1)
+    }
 
     companion object {
         private fun getMockPost(id: Int) = PostApiModel(
